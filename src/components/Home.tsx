@@ -38,7 +38,7 @@ const Home = () => {
       created_at: '2024-01-07T20:48:13.000Z',
     },
   ];
-  console.log(mediaArray);
+  // console.log(mediaArray);
   return (
     <>
       <h2>My Media</h2>
@@ -54,7 +54,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {mediaArray.map((item) => <MediaRow mediaItem={item} />)}
+          {mediaArray.map((item) => <MediaRow key={item.media_id} mediaItem={item} />)}
         </tbody>
       </table>
     </>
