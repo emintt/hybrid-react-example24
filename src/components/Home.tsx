@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <>
       <h2>My Media</h2>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Thumbnail</th>
@@ -54,7 +54,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {mediaArray.map((item) => <MediaRow mediaItem={item} />)}
+          {mediaArray.map((item) => <MediaRow mediaItem={item} key={item.media_id}/>)}
         </tbody>
       </table>
     </>
