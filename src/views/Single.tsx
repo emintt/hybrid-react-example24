@@ -4,7 +4,8 @@ import { MediaItem } from "../types/DBtypes";
 const Single = () => {
   const {state} = useLocation();
   const navigate: NavigateFunction = useNavigate();
-  const item: MediaItem = state.item;
+  console.log('single state', state);
+  const item: MediaItem = state;
   return (
     <>
       <h3>{item.title}</h3>
@@ -21,7 +22,7 @@ const Single = () => {
       <button onClick={() => {
         navigate(-1);
       }}>
-        close
+        go back
       </button>
     </>
   );

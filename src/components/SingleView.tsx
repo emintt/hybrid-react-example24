@@ -1,5 +1,6 @@
 // SingleView.tsx
-import {MediaItem} from '../types/DBTypes';
+import { MediaItem } from "../types/DBtypes";
+
 
 const SingleView = (props: {
   item: MediaItem;
