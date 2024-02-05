@@ -1,5 +1,6 @@
 // SingleView.tsx
-import {MediaItem} from '../types/DBTypes';
+import { MediaItem } from "../types/DBtypes";
+
 
 const SingleView = (props: {
   item: MediaItem;
@@ -10,7 +11,7 @@ const SingleView = (props: {
     <dialog open>
       <h3>{item.title}</h3>
       {item.media_type.includes('video') ? (
-        <video src=""></video>
+        <video controls src={item.filename}></video>
       ) : (
         <img src={item.thumbnail} alt={item.title} />
       )}

@@ -1,9 +1,8 @@
-import { SetStateAction } from "react";
 import { MediaItem } from "../types/DBtypes";
 
 const MediaRow = (props: {
   mediaItem: MediaItem,
-  setSelectedItem: (item: MediaItem | undefined) => undefined
+  setSelectedItem: (item: MediaItem | undefined) => void
 }) => {
   const item = props.mediaItem;
   const setSelectedItem = props.setSelectedItem;
