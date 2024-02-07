@@ -1,11 +1,11 @@
 import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
-import { MediaItem } from "../types/DBtypes";
+import { MediaItemWithOwner } from "../types/DBtypes";
 
 const Single = () => {
   const {state} = useLocation();
   const navigate: NavigateFunction = useNavigate();
   console.log('single state', state);
-  const item: MediaItem = state;
+  const item: MediaItemWithOwner = state;
   return (
     <>
       <h3>{item.title}</h3>

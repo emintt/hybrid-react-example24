@@ -1,4 +1,4 @@
-import { MediaItem } from "../types/DBtypes";
+import { MediaItem, MediaItemWithOwner, User } from "../types/DBtypes";
 import MediaRow from "../components/MediaRow";
 import { useEffect, useState } from "react";
 import { fetchData } from "../lib/functions";
@@ -9,12 +9,19 @@ const Home = () => {
   // console.log(mediaArray);
   const getMedia = async () => {
     try {
-      const data = await fetchData<MediaItem[]>('data.json');
-      setMediaArray(data);
+      const MediaIems = await fetchData<MediaItem[]>(import.meta.env.VITE_MEDIA_API + '/media');
+
+      const itemsWithOwner: MediaItemWithOwner[] = await Promise.all(MediaIems.map( async (item) => {
+        const owner = await fetchData<User>(import.meta.env.VITE_AUTH_API + '/users/' + item.user_id);
+        const itemWithOwner: MediaItemWithOwner = {...item, username: owner.username};
+        return itemWithOwner;
+      }));
+      setMediaArray(itemsWithOwner);
+
+      console.log('mediaArry', itemsWithOwner);
     } catch (error) {
       console.error('get media failed', error);
     }
-
   }
   // useEffect nay ko phu thuoc vao mediaArray (ko pass mediaArray vao no), no chi cahy 1 lan khi component dc tai. Khi media dc
   useEffect(() => {getMedia()}, []);
@@ -31,6 +38,7 @@ const Home = () => {
             <th>Created</th>
             <th>Size</th>
             <th>Type</th>
+            <th>Owner</th>
           </tr>
         </thead>
         <tbody>
