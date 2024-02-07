@@ -1,30 +1,12 @@
-import { MediaItem, MediaItemWithOwner, User } from "../types/DBtypes";
 import MediaRow from "../components/MediaRow";
-import { useEffect, useState } from "react";
-import { fetchData } from "../lib/functions";
+import { useMedia } from "../hooks/apiHooks";
+import { MediaItemWithOwner } from "../types/DBtypes";
 // import SingleView from "../components/SingleView";
 
 const Home = () => {
-  const [mediaArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
-  // console.log(mediaArray);
-  const getMedia = async () => {
-    try {
-      const MediaIems = await fetchData<MediaItem[]>(import.meta.env.VITE_MEDIA_API + '/media');
 
-      const itemsWithOwner: MediaItemWithOwner[] = await Promise.all(MediaIems.map( async (item) => {
-        const owner = await fetchData<User>(import.meta.env.VITE_AUTH_API + '/users/' + item.user_id);
-        const itemWithOwner: MediaItemWithOwner = {...item, username: owner.username};
-        return itemWithOwner;
-      }));
-      setMediaArray(itemsWithOwner);
+  const mediaArray: MediaItemWithOwner[] = useMedia();
 
-      console.log('mediaArry', itemsWithOwner);
-    } catch (error) {
-      console.error('get media failed', error);
-    }
-  }
-  // useEffect nay ko phu thuoc vao mediaArray (ko pass mediaArray vao no), no chi cahy 1 lan khi component dc tai. Khi media dc
-  useEffect(() => {getMedia()}, []);
   return (
     <>
       {/* {selectedItem && <SingleView item={selectedItem} setSelectedItem={setSelectedItem}/>} */}
