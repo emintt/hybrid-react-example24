@@ -9,12 +9,20 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const initValues: Credentials = {username: '', password: ''};
 
+  // ham doLogin la parameter cua useForm, cu the la parameter callback cua useForm
+  // trong handleSubmit callback dc goi, co nghia la khi form submit, goi call back
+  // = send form data to API, doLogin
   const doLogin = async () => {
-    console.log('submit callback, inputs', inputs);
-    const loginResult = await postLogin(inputs as Credentials);
-    if (loginResult) {
-      localStorage.setItem('token', loginResult.token);
-      navigate('/');
+    try {
+      console.log('submit callback, inputs:', inputs);
+      // use postLogin to authenticate with server
+      const loginResult = await postLogin(inputs as Credentials);
+      if (loginResult) {
+        localStorage.setItem('token', loginResult.token);
+        navigate('/');
+      }
+    } catch (error) {
+      console.log((error as Error).message);
     }
   };
   const {handleSubmit, handleInputChange, inputs} = useForm(doLogin, initValues);
@@ -23,11 +31,11 @@ const LoginForm = () => {
       <h3>Login</h3>
       <form onSubmit={handleSubmit}>
         <div>
-            <label htmlFor="UserWithLevelname">Username</label>
+            <label htmlFor="loginUsername">Username</label>
             <input
                 name="username"
                 type="text"
-                id="UserWithLevelname"
+                id="loginUsername"
                 onChange={handleInputChange}
                 autoComplete="username"
             />
