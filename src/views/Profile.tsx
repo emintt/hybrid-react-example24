@@ -8,16 +8,18 @@ const Profile = () => {
   const [user, setUser] = useState<UserResponse['user'] | null>(null);
   const {getUserByToken} = useUser();
 
-  const getUser = async () => {
-    const token = localStorage.getItem('token');
-    const userResponse = await getUserByToken(token!);
-    setUser(userResponse.user);
-  }
-
   useEffect(() => {
+    const getUser = async () => {
+      const token = localStorage.getItem('token');
+      const userResponse = await getUserByToken(token!);
+      setUser(userResponse.user);
+    }
+
     getUser();
   }, []);
+
   // getUser(); tää aja ikuisesti
+
   return (
     <>
       <h2>Profile page</h2>
