@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchData } from "../lib/functions";
 import { MediaItem, MediaItemWithOwner, User } from "../types/DBtypes";
 import { Credentials } from "../types/Localtypes";
-import { LoginResponse } from "../types/MessageTypes";
+import { LoginResponse, UserResponse } from "../types/MessageTypes";
 
 const useMedia = (): MediaItemWithOwner[] => {
   // palauta mediaArray, missä on media tietoa + kukin itemin username
@@ -36,6 +36,19 @@ const useMedia = (): MediaItemWithOwner[] => {
 
 const useUser = () => {
   // TODO: implement network connections for auth/user server
+  // tee state user, hae user tietoa
+  const getUserByToken = async (token: string) => {
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      }
+    };
+    return await fetchData<UserResponse>(
+      import.meta.env.VITE_AUTH_API + '/users/token',
+      options
+    );
+  }
+  return {getUserByToken};
 }
 
 const useAuthentication = () => {
