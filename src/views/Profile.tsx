@@ -2,23 +2,27 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../hooks/apiHooks";
 import { UserResponse } from "../types/MessageTypes";
+import { useUserContext } from "../hooks/contextHooks";
 
 const Profile = () => {
  // moi dau no ko co gia tri userresponse, phai doi, tuy vao mang, nen de gia tri cua no ban dau la null
-  const [user, setUser] = useState<UserResponse['user'] | null>(null);
-  const {getUserByToken} = useUser();
+  // const [user, setUser] = useState<UserResponse['user'] | null>(null);
+  // const {getUserByToken} = useUser();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const token = localStorage.getItem('token');
-      const userResponse = await getUserByToken(token!);
-      setUser(userResponse.user);
-    }
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const token = localStorage.getItem('token');
+  //     const userResponse = await getUserByToken(token!);
+  //     setUser(userResponse.user);
+  //   }
 
-    getUser();
-  }, []);
+  //   getUser();
+  // }, []);
 
-  // getUser(); tää aja ikuisesti
+  // user on tallennettu contextiin, haetaan vaan user state
+  const {user} = useUserContext();
+
+
 
   return (
     <>

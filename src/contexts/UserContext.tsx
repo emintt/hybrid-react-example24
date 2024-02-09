@@ -16,6 +16,12 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     // login, logout and autologin functions are here instead of components
     const handleLogin = async (credentials: Credentials) => {
         try {
+          const loginResult = await postLogin(credentials);
+          if (loginResult) {
+            localStorage.setItem('token', loginResult.token);
+            setUser(loginResult.user);
+            navigate('/');
+          }
             // TODO: post login credentials to API
             // TODO: set token to local storage
             // TODO: set user to state
@@ -28,8 +34,11 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const handleLogout = () => {
         try {
             // TODO: remove token from local storage
+            localStorage.removeItem('token');
             // TODO: set user to null
+            setUser(null);
             // TODO: navigate to home
+            navigate('/');
         } catch (e) {
             console.log((e as Error).message);
         }
@@ -39,6 +48,12 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const handleAutoLogin = async () => {
         try {
             // TODO: get token from local storage
+            const token = localStorage.getItem('token');
+            if (token) {
+              const userResponse = await getUserByToken(token);
+              setUser(userResponse.user);
+              navigate('/');
+            }
             // TODO: if token exists, get user data from API
             // TODO: set user to state
             // TODO: navigate to home

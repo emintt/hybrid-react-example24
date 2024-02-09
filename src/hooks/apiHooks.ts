@@ -35,7 +35,7 @@ const useMedia = (): MediaItemWithOwner[] => {
 }
 
 const useUser = () => {
-  // TODO: implement network connections for auth/user server
+  // implement network connections for auth/user server
   // tee state user, hae user tietoa
   const getUserByToken = async (token: string) => {
     const options = {
