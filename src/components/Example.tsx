@@ -19,3 +19,23 @@ function Example() {
 }
 
 export default Example;
+
+// import {useState} from 'react';
+
+// function Example() {
+//     const [name, setName] = useState<string | null>(null);
+
+//     return (
+//         <div>
+//             <p>You entered: {name}</p>
+//             <input
+//                 type="text"
+//                 value={name ? name : ''} // Check for null/undefined
+//                 onChange={(e) => setName(e.target.value)}
+//             />
+//         </div>
+//     );
+// }
+
+// export default Example;
+
