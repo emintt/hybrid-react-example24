@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useForm } from "../hooks/formHooks";
-import { useMedia } from "../hooks/apiHooks";
+import { useFile, useMedia } from "../hooks/apiHooks";
 import { useNavigate } from "react-router-dom";
 
 // Upload.tsx
 const Upload = () => {
-  // halutaan file, File type on ts built-in type
-  // File vaati oman ??
+  // File vaati oman tyypi, halutaan file, File type on ts built-in type
   const [file, setFile] = useState<File | null>(null);
   const {postFile} = useFile();
   const {postMedia} = useMedia();
@@ -19,16 +18,16 @@ const Upload = () => {
 
   const doUpload = async () => {
     try {
-      // TODO: call postFile function (see below)
-      // TODO: call postMedia function (see below)
-      // TODO: redirect to Home
       const token = localStorage.getItem('token');
       if (!token || !file) {
         return;
       }
+      // call postFile function
+      // call postMedia function
+      // redirect to Home
       const fileResult = await postFile(file, token);
       const mediaResult = await postMedia(fileResult, inputs, token);
-      alert(mediaResult);
+      alert(mediaResult.message);
       navigate('/');
 
     } catch (e) {
@@ -40,7 +39,7 @@ const Upload = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // files: valitse useamman file
     if (e.target.files) {
-        console.log(e.target.files[0]);
+        console.log(e.target.files);
         setFile(e.target.files[0]);
     }
 };
