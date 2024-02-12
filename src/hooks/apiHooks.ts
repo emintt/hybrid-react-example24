@@ -35,7 +35,7 @@ const useMedia = (): MediaItemWithOwner[] => {
 }
 
 const useUser = () => {
-  // TODO: implement network connections for auth/user server
+  // implement network connections for auth/user server
   // tee state user, hae user tietoa
   const getUserByToken = async (token: string) => {
     const options = {
@@ -70,7 +70,7 @@ const useUser = () => {
 const useAuthentication = () => {
   const postLogin = async (creds: Credentials) => {
     try {
-      // TODO: fetch login response from auth server
+      // fetch login response from auth server
       return await fetchData<LoginResponse>(
         import.meta.env.VITE_AUTH_API + '/auth/login',
         {

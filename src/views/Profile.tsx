@@ -4,7 +4,8 @@ import { useUser } from "../hooks/apiHooks";
 import { UserResponse } from "../types/MessageTypes";
 
 const Profile = () => {
- // moi dau no ko co gia tri userresponse, phai doi, tuy vao mang, nen de gia tri cua no ban dau la null
+  // moi dau no ko co gia tri userresponse, phai doi, tuy vao mang,
+  // nen de gia tri cua no ban dau la null
   const [user, setUser] = useState<UserResponse['user'] | null>(null);
   const {getUserByToken} = useUser();
 
