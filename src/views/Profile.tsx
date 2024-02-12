@@ -1,7 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { useUser } from "../hooks/apiHooks";
-import { UserResponse } from "../types/MessageTypes";
 import { useUserContext } from "../hooks/contextHooks";
 
 const Profile = () => {
