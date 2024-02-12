@@ -2,7 +2,7 @@
 import React, { createContext, useState } from 'react';
 import { UserWithNoPassword } from '../types/DBtypes';
 import { useAuthentication, useUser } from '../hooks/apiHooks';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContextType, Credentials } from '../types/Localtypes';
 
 const UserContext = createContext<AuthContextType | null>(null);
@@ -12,20 +12,21 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const { postLogin } = useAuthentication();
     const { getUserByToken } = useUser();
     const navigate = useNavigate();
+    const location = useLocation();
 
     // login, logout and autologin functions are here instead of components
     const handleLogin = async (credentials: Credentials) => {
         try {
+          // post login credentials to API
+          // set token to local storage
+          // set user to state
+          // navigate to home
           const loginResult = await postLogin(credentials);
           if (loginResult) {
             localStorage.setItem('token', loginResult.token);
             setUser(loginResult.user);
             navigate('/');
           }
-            // TODO: post login credentials to API
-            // TODO: set token to local storage
-            // TODO: set user to state
-            // TODO: navigate to home
         } catch (e) {
             console.log((e as Error).message);
         }
@@ -33,11 +34,11 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     const handleLogout = () => {
         try {
-            // TODO: remove token from local storage
+            // remove token from local storage
             localStorage.removeItem('token');
-            // TODO: set user to null
+            // set user to null
             setUser(null);
-            // TODO: navigate to home
+            // navigate to home
             navigate('/');
         } catch (e) {
             console.log((e as Error).message);
@@ -47,16 +48,18 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     // handleAutoLogin is used when the app is loaded to check if there is a valid token in local storage
     const handleAutoLogin = async () => {
         try {
-            // TODO: get token from local storage
+            // get token from local storage
+            // if token exists, get user data from API
             const token = localStorage.getItem('token');
             if (token) {
               const userResponse = await getUserByToken(token);
+              // set user to state
               setUser(userResponse.user);
-              navigate('/');
+              // when page is refreshed, the user is redirected to origin (ProtectedRoute.tsx)
+              const origin = location.state.from.pathname || '/';
+              console.log('location', location.state);
+              navigate(origin);
             }
-            // TODO: if token exists, get user data from API
-            // TODO: set user to state
-            // TODO: navigate to home
         } catch (e) {
             console.log((e as Error).message);
         }
