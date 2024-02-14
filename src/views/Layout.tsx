@@ -12,22 +12,27 @@ const Layout = () => {
       <header>
         <h1>My app</h1>
         <nav>
-          <ul>
+          <ul className=" flex justify-end bg-slate-950">
             <li>
-              <Link to="/">Home</Link>
+              <Link className=" block p-4 text-slate-50 hover:bg-slate-700" to="/">Home</Link>
             </li>
-            <li>
-              <Link to="/profile">Profile</Link>
-            </li>
-            <li>
-              <Link to="/upload">Upload</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/logout">Logout</Link>
-            </li>
+            {user ?
+            <>
+              <li>
+                <Link className=" block p-4 text-slate-50 hover:bg-slate-700" to="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link className=" block p-4 text-slate-50 hover:bg-slate-700" to="/upload">Upload</Link>
+              </li>
+              <li>
+                <Link   className=" block p-4 text-slate-50 hover:bg-slate-700" to="/logout">Logout</Link>
+              </li>
+            </>
+            :
+              <li>
+                <Link className=" block p-4 text-slate-50 hover:bg-slate-700" to="/login">Login</Link>
+              </li>
+            }
           </ul>
         </nav>
       </header>

@@ -1,3 +1,4 @@
+import { useUserContext } from "../hooks/contextHooks";
 import { MediaItemWithOwner } from "../types/DBtypes";
 import { Link } from "react-router-dom";
 
@@ -5,6 +6,8 @@ const MediaRow = (props: {
   item: MediaItemWithOwner,
 }) => {
   const {item} = props;
+  const {user} = useUserContext();
+  // console.log(user);
   return (
     <tr className="media-row">
       <td>
@@ -17,7 +20,16 @@ const MediaRow = (props: {
       <td>{item.media_type}</td>
       <td>{item.username}</td>
       <td>
-        <Link to="/single" state={item}>View</Link>
+        <Link className=" bg-slate-700 p-2 hover:bg-slate-950"
+          to='/single' state={item}>View</Link>
+        {user && (user.user_id === item.user_id) &&
+        (<>
+          <button className=" bg-slate-700 p-2 hover:bg-slate-950"
+            onClick={() => console.log("modify", item)}>Modify</button>
+          <button className=" bg-slate-700 p-2 hover:bg-slate-950"
+            onClick={() => console.log("delete", item)}>Delete</button>
+        </>)}
+
       </td>
     </tr>
   );

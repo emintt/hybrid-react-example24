@@ -22,16 +22,18 @@ const LoginForm = () => {
         <div>
             <label htmlFor="loginUsername">Username</label>
             <input
-                name="username"
-                type="text"
-                id="loginUsername"
-                onChange={handleInputChange}
-                autoComplete="username"
+              className=" text-slate-950"
+              name="username"
+              type="text"
+              id="loginUsername"
+              onChange={handleInputChange}
+              autoComplete="username"
             />
         </div>
         <div>
             <label htmlFor="loginpassword">Password</label>
             <input
+              className=" text-slate-950"
                 name="password"
                 type="password"
                 id="loginpassword"
