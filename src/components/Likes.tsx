@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Like } from "../types/DBtypes";
+import { Like, MediaItemWithOwner } from "../types/DBtypes";
 
 type LikeState = {
   count: number;
@@ -30,7 +30,7 @@ const LikeReducer = (state: LikeState, action: LikeAction): LikeState => {
   }
 }
 
-const Likes = () => {
+const Likes = ({item}: {item: MediaItemWithOwner}) => {
   const [LikeState, likeDispatch] = useReducer(LikeReducer, likeInitialState);
   return (
     <>

@@ -1,8 +1,14 @@
 import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 import { MediaItemWithOwner } from "../types/DBtypes";
 import Likes from "../components/Likes";
+import Comments from "../components/Comments";
+import { useUserContext } from "../hooks/contextHooks";
 
 const Single = () => {
+  const {user, handleAutoLogin} = useUserContext();
+  if (!user) {
+    handleAutoLogin();
+  }
   const {state} = useLocation();
   const navigate: NavigateFunction = useNavigate();
   console.log('single state', state);
@@ -20,6 +26,7 @@ const Single = () => {
       <p>{new Date(item.created_at).toLocaleString('fi-FI')}</p>
       <p>{item.filesize}</p>
       <p>{item.media_type}</p>
+      {user && <Comments item={item}/>}
       <button onClick={() => {
         navigate(-1);
       }}>
