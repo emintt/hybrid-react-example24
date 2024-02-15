@@ -1,4 +1,5 @@
 import MediaRow from "../components/MediaRow";
+import Counter from "../components/ReducerExample";
 import { useMedia } from "../hooks/apiHooks";
 // import SingleView from "../components/SingleView";
 
@@ -9,6 +10,7 @@ const Home = () => {
   return (
     <>
       {/* {selectedItem && <SingleView item={selectedItem} setSelectedItem={setSelectedItem}/>} */}
+      <Counter />
       <h2>My Media</h2>
       <table>
         <thead>
