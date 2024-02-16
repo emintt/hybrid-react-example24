@@ -10,6 +10,9 @@ type CommentWithUserName =  Partial<Comment & {username: string}>;
 
 type CommentStore = {
   comments: CommentWithUserName[];
+  // set comment: lähetettään kommentti bacendiin, talennetaan tietokantaam
+  // haetaan päivitetty kommentti tietokannasta, sit set komment päivitä sitä
+  setComments: (comment: Partial<Comment & {username: string}>) => void;
   addComment: (comment: Partial<Comment & {username: string}>) => void;
 };
 
@@ -17,6 +20,10 @@ type CommentStore = {
 export const useCommentStore = create<CommentStore>((set) => ({
   // varsinainen state
   comments: [],
+  setComments: (comments) =>
+    set(() => ({
+      comments: comments,
+    })),
   addComment: (comment) =>
     set((state) => ({
       comments: [

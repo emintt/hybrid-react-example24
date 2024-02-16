@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchData } from "../lib/functions";
 import { MediaItem, MediaItemWithOwner, User } from "../types/DBtypes";
 import { Credentials } from "../types/Localtypes";
-import { LoginResponse, MediaResponse, UploadResponse, UserResponse } from "../types/MessageTypes";
+import { LoginResponse, MediaResponse, MessageResponse, UploadResponse, UserResponse } from "../types/MessageTypes";
 
 // const useMedia = (): MediaItemWithOwner[] => {  -> type comes automatically
   const useMedia = () => {
@@ -112,7 +112,14 @@ const useUser = () => {
     return result;
   };
 
-  return {getUserByToken, postUser, getUsernameAvailable, getEmailAvailable};
+  const getUserById = async (user_id: number) => {
+    const result = await fetchData<User>(
+      import.meta.env.VITE_AUTH_API + '/users/' + user_id
+    );
+    return result;
+  };
+
+  return {getUserByToken, postUser, getUsernameAvailable, getEmailAvailable, getUserById};
 }
 
 const useAuthentication = () => {
@@ -190,4 +197,36 @@ const useLike = () => {
   return {postLike, deleteLike, getCountByMediaId, getUserLike};
 };
 
-export {useMedia, useUser, useAuthentication, useFile, useLike};
+const useComment = () => {
+  const postComment = async (
+    comment_text: string,
+    media_id: number,
+    user_id: number,
+    token: string) => {
+    // TODO: Send a POST request to /comments with the comment object and the token in the Authorization header.
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+      body: formData,
+    }
+
+    return await fetchData<MessageResponse>(
+      import.meta.env.VITE_MEDIA_API + '/comments' + media_id,
+    );
+  };
+
+  const {getUserById} = useUser();
+
+  const getCommentsByMediaId = async (media_id: number) => {
+      // TODO: Send a GET request to /comments/:media_id to get the comments.
+
+    // get usernames for all comments
+    const commentsWithUsername = await Promise.all();
+  };
+
+  return { postComment, getCommentsByMediaId };
+};
+
+export {useMedia, useUser, useAuthentication, useFile, useLike, useComment};
