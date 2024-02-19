@@ -3,13 +3,14 @@ import { useUserContext } from "../hooks/contextHooks";
 import { useForm } from "../hooks/formHooks";
 import { useCommentStore } from "../store";
 import { MediaItemWithOwner } from "../types/DBtypes";
-import { useComment } from "../hooks/apiHooks";
+import { useComment } from "../hooks/GraphQLHooks";
+// import { useComment } from "../hooks/apiHooks";
 
 const Comments = ({item}: {item: MediaItemWithOwner}) => {
   const {comments, addComment, setComments} = useCommentStore();
   const {user} = useUserContext();
   const formRef = useRef<HTMLFormElement>(null);
-  const {getCommentsByMediaId} = useComment();
+  const {getCommentsByMediaId} = useComment());
 
   const initValues = {comment_text: ''};
   const doComment = async () => {

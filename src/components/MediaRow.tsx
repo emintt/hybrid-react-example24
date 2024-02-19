@@ -29,8 +29,8 @@ const MediaRow = (props: {
           <button className=" bg-slate-700 p-2 hover:bg-slate-950"
             onClick={() => console.log("delete", item)}>Delete</button>
         </>)}
-
       </td>
+      <p>Comments: {item.comments_count}</p>
     </tr>
   );
 }

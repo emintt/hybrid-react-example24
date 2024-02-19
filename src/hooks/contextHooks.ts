@@ -6,12 +6,21 @@ import { UserContext } from '../contexts/UserContext';
 // this way we don't have errors when UserContext is not defined or null (thats why we have the if statement)
 
 const useUserContext = () => {
-    const context = useContext(UserContext);
-    if (!context) {
-        throw new Error('useUserContext must be used within an UserProvider');
-    }
+  const context = useContext(UserContext);
+  if (!context) {
+      throw new Error('useUserContext must be used within an UserProvider');
+  }
 
-    return context;
+  return context;
 };
 
-export { useUserContext };
+const useUpdateContext = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUpdateContext must be used within an UserProvider');
+}
+
+return context;
+};
+
+export { useUserContext, useUpdateContext };

@@ -1,9 +1,11 @@
 // UserContext.tsx
 import React, { createContext, useState } from 'react';
 import { UserWithNoPassword } from '../types/DBtypes';
-import { useAuthentication, useUser } from '../hooks/apiHooks';
+// import { useAuthentication, useUser } from '../hooks/apiHooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContextType, Credentials } from '../types/Localtypes';
+import { useAuthentication, useUser } from '../hooks/GraphQLHooks';
+
 
 const UserContext = createContext<AuthContextType | null>(null);
 
