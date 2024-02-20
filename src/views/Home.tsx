@@ -12,16 +12,16 @@ const Home = () => {
       {/* {selectedItem && <SingleView item={selectedItem} setSelectedItem={setSelectedItem}/>} */}
       <Counter />
       <h2>My Media</h2>
-      <table>
+      <table className=" border-2 border-collapse">
         <thead>
           <tr>
-            <th>Thumbnail</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Created</th>
-            <th>Size</th>
-            <th>Type</th>
-            <th>Owner</th>
+            <th className=" border-2 border-slate-600 text-left py-2 w-3/12">Thumbnail</th>
+            <th className=" border-2 border-slate-600 text-left py-2 w-3/12">Title</th>
+            <th className=" border-2 border-slate-600 text-left py-2 w-3/12">Description</th>
+            <th className=" border-2 border-slate-600 text-left py-2 w-3/12">Created</th>
+            <th className=" border-2 border-slate-600 text-left py-2 w-3/12">Size</th>
+            <th className=" border-2 border-slate-600 text-left py-2 w-3/12">Type</th>
+            <th className=" border-2 border-slate-600 text-left py-2 w-3/12">Owner</th>
           </tr>
         </thead>
         <tbody>

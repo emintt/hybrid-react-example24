@@ -5,7 +5,7 @@ import { Credentials } from "../types/Localtypes";
 import { LoginResponse, MediaResponse, UploadResponse, UserResponse } from "../types/MessageTypes";
 
 // const useMedia = (): MediaItemWithOwner[] => {  -> type comes automatically
-  const useMedia = () => {
+const useMedia = () => {
   // palauta mediaArray, missä on media tietoa + kukin itemin username
   const [mediaArray, setMediaArray] = useState<MediaItemWithOwner[]>([]);
   // console.log(mediaArray);
