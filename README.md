@@ -1,6 +1,6 @@
 # Hybrid Apps - React App
 
-Open [this link in browser](https://users.metropolia.fi/~thitng/react/likes) to see the app in action
+Open [this link in browser](https://users.metropolia.fi/~thitng/react/zustand) to see the app in action
 
 ## React + TypeScript + Vite
 
