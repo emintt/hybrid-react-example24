@@ -14,7 +14,7 @@ const Single = () => {
   console.log('single state', state);
   const item: MediaItemWithOwner = state;
   return (
-    <>
+    <div className=" flex flex-col w-[32rem] p-4">
       <h3>{item.title}</h3>
       {item.media_type.includes('video') ? (
         <video controls src="{item.filename}"></video>
@@ -26,13 +26,13 @@ const Single = () => {
       <p>{new Date(item.created_at).toLocaleString('fi-FI')}</p>
       <p>{item.filesize}</p>
       <p>{item.media_type}</p>
-      {user && <Comments item={item}/>}
-      <button onClick={() => {
-        navigate(-1);
-      }}>
+      <button
+        className="m-3 rounded-md bg-slate-700 p-3 self-center"
+        onClick={() => {navigate(-1);}}
+      >
         go back
       </button>
-    </>
+    </div>
   );
 }
 
