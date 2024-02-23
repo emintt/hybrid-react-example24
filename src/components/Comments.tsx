@@ -6,29 +6,21 @@ import { MediaItemWithOwner } from "../types/DBtypes";
 import { useComment } from "../hooks/apiHooks";
 
 const Comments = ({item}: {item: MediaItemWithOwner}) => {
-  const {comments, addComment} = useCommentStore();
+  const {comments, addComment, setComments} = useCommentStore();
   const {user} = useUserContext();
   const formRef = useRef<HTMLFormElement>(null);
-  // const {getCommentsByMediaId} = useComment();
+  const {getCommentsByMediaId, postComment} = useComment();
 
   const initValues = {comment_text: ''};
+
   const doComment = async () => {
-    // const token = localStorage.getItem('token');
-    // if (!user || token) {
-    //   return
-    // }
+    const token = localStorage.getItem('token');
+    if (!user || !token) {
+      return
+    }
     try {
-      if (!user) {
-        return;
-      }
-      addComment({
-        comment_text: inputs.comment_text,
-        media_id: item.media_id,
-        user_id: user.user_id,
-        username: user.username,
-      });
-      // await postComment(inputs.comment_text, item.media_id, token);
-      // // await getComments();
+      await postComment(inputs.comment_text, item.media_id, token);
+      await getComments();
       // käyttää useRef resetoimaan lomake formin lähettämisen jälkeen
       if (formRef.current) {
         formRef.current.reset();
@@ -36,31 +28,22 @@ const Comments = ({item}: {item: MediaItemWithOwner}) => {
     } catch (error) {
       console.error('postComment failed', error);
     }
-    // addComment({
-    //   comment_text: inputs.comment_text,
-    //   media_id: item.media_id,
-    //   user_id: user.user_id,
-    //   username: user.username,
-    // });
-    // resetoi lomake, formRef.current päästä formille
-    // if (formRef.current) {
-    //   formRef.current.reset();
-    // }
   };
   const {handleSubmit, handleInputChange, inputs} = useForm(doComment, initValues);
 
-  // const getComments = async () => {
-  //   try {
-  //     const comments = getCommentsByMediaId();
-  //     setComments(comments);
-  //   } catch (error) {
-  //     console.error('getomments failed', error);
-  //     // setComments([]);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getComments();
-  // }, []);
+  const getComments = async () => {
+    try {
+      const comments = getCommentsByMediaId(item.media_id);
+      setComments(comments);
+      console.log(comments);
+    } catch (error) {
+      console.error('getomments failed', error);
+      setComments([]);
+    }
+  };
+  useEffect(() => {
+    getComments();
+  }, []);
 
   // tää tulostaa koko ajan, koska se renderoidaan koko ajan kun state muuttuu,
   // tässä tapauksessa inputs muuttuu, niin se renderoidaan uudestaan

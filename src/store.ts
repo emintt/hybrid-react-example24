@@ -11,7 +11,7 @@ type CommentStore = {
   comments: CommentWithUserName[];
   // set comment: lähetettään kommentti backendiin, talennetaan tietokantaan
   // haetaan päivitetty kommentti tietokannasta, sit set komment päivitä sitä
-  setComments: (comment: Partial<Comment & {username: string}>) => void;
+  setComments: (comments: Partial<Comment & {username: string}>[]) => void;
   addComment: (comment: Partial<Comment & {username: string}>) => void;
 };
 
@@ -19,6 +19,7 @@ type CommentStore = {
 export const useCommentStore = create<CommentStore>((set) => ({
   // varsinainen state
   comments: [],
+  // after fetching comments by media id from api, setComments set/update them to the store
   setComments: (comments) =>
     set(() => ({
       comments: comments,

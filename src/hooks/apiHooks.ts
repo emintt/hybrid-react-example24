@@ -227,27 +227,31 @@ const useComment = () => {
   const postComment = async (
     comment_text: string,
     media_id: number,
-    user_id: number,
     token: string) => {
-    // TODO: Send a POST request to /comments with the comment object and the token in the Authorization header.
+    // Send a POST request to /comments with the comment object
+    // and the token in the Authorization header.
     const options: RequestInit = {
       method: 'POST',
       headers: {
         Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
       },
-      body: formData,
+      body: JSON.stringify({comment_text, media_id}),
     }
 
     return await fetchData<MessageResponse>(
-      import.meta.env.VITE_MEDIA_API + '/comments' + media_id,
+      import.meta.env.VITE_MEDIA_API + '/comments',
+      options,
     );
   };
 
   const {getUserById} = useUser();
 
   const getCommentsByMediaId = async (media_id: number) => {
-      // TODO: Send a GET request to /comments/:media_id to get the comments.
-
+    //Send a GET request to /comments/:media_id to get the comments.
+    return await fetchData<Comment[]>(
+      import.meta.env.VITE_MEDIA_API + '/comments/bymedia/' + media_id,
+    );
     // get usernames for all comments
     const commentsWithUsername = await Promise.all();
   };
