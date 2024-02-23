@@ -3,14 +3,13 @@ import { Comment } from "./types/DBtypes";
 
 // voi lisätä update, delete...
 // lisää username kommentille, partial: kaikki ei ole pakko laitta es. id, created at ...
-// addComment:
 
 // jos ei halua toista itse
 type CommentWithUserName =  Partial<Comment & {username: string}>;
 
 type CommentStore = {
   comments: CommentWithUserName[];
-  // set comment: lähetettään kommentti bacendiin, talennetaan tietokantaam
+  // set comment: lähetettään kommentti backendiin, talennetaan tietokantaan
   // haetaan päivitetty kommentti tietokannasta, sit set komment päivitä sitä
   setComments: (comment: Partial<Comment & {username: string}>) => void;
   addComment: (comment: Partial<Comment & {username: string}>) => void;

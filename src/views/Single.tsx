@@ -2,14 +2,12 @@ import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 import { MediaItemWithOwner } from "../types/DBtypes";
 import Likes from "../components/Likes";
 import Comments from "../components/Comments";
-import { useUserContext } from "../hooks/contextHooks";
 
 const Single = () => {
-  const {user, handleAutoLogin} = useUserContext();
-  if (!user) {
-    handleAutoLogin();
-  }
   const {state} = useLocation();
+  // if (!user) {
+  //   handleAutoLogin();
+  // }
   const navigate: NavigateFunction = useNavigate();
   console.log('single state', state);
   const item: MediaItemWithOwner = state;
@@ -19,11 +17,14 @@ const Single = () => {
       {item.media_type.includes('video') ? (
         <video controls src="{item.filename}"></video>
       ) : (
-        <img src={item.thumbnail} alt={item.title} />
+        <img src={item.filename} alt={item.title} />
       )}
       <Likes item={item} />
       <p>{item.description}</p>
-      <p>{new Date(item.created_at).toLocaleString('fi-FI')}</p>
+      <p>
+        Uploaded at: {new Date(item.created_at).toLocaleString('fi-FI')}, by:{' '}
+        {item.username}{' '}
+      </p>
       <p>{item.filesize}</p>
       <p>{item.media_type}</p>
       <button
@@ -32,6 +33,7 @@ const Single = () => {
       >
         go back
       </button>
+      <Comments item={item}/>
     </div>
   );
 }
