@@ -6,7 +6,7 @@ import { MediaItemWithOwner } from "../types/DBtypes";
 import { useComment } from "../hooks/apiHooks";
 
 const Comments = ({item}: {item: MediaItemWithOwner}) => {
-  const {comments, addComment, setComments} = useCommentStore();
+  const {comments, setComments} = useCommentStore();
   const {user} = useUserContext();
   const formRef = useRef<HTMLFormElement>(null);
   const {getCommentsByMediaId, postComment} = useComment();
@@ -33,7 +33,7 @@ const Comments = ({item}: {item: MediaItemWithOwner}) => {
 
   const getComments = async () => {
     try {
-      const comments = getCommentsByMediaId(item.media_id);
+      const comments = await getCommentsByMediaId(item.media_id);
       setComments(comments);
       console.log(comments);
     } catch (error) {
@@ -84,7 +84,7 @@ const Comments = ({item}: {item: MediaItemWithOwner}) => {
             {comments.map((comment) => (
               <li key={comment.comment_id}>
                 <div className="rounded-md border border-slate-200 bg-slate-800 p-3 text-slate-100">
-                  <span className="font-bold text-slate-200">On {new Date(comment.created_at!).toLocaleDateString()}</span>
+                  <span className="font-bold text-slate-200">On {' '} {new Date(comment.created_at!).toLocaleDateString('fi-FI')} {' '}</span>
                   <span className="font-bold text-slate-200">
                     {' '}{comment.username} wrote:
                   </span>

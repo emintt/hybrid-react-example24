@@ -57,7 +57,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
               setUser(userResponse.user);
               // when page is refreshed, the user is redirected to origin (ProtectedRoute.tsx)
               const origin = location.state.from.pathname || '/';
-              console.log('location', location.state);
+              console.log('location', location);
               navigate(origin);
             }
         } catch (e) {

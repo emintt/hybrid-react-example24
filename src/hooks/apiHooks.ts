@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../lib/functions";
-import { Like, MediaItem, MediaItemWithOwner, User } from "../types/DBtypes";
+import { Comment, Like, MediaItem, MediaItemWithOwner, User } from "../types/DBtypes";
 import { Credentials } from "../types/Localtypes";
 import { LoginResponse, MediaResponse, MessageResponse, UploadResponse, UserResponse } from "../types/MessageTypes";
 
@@ -114,13 +114,14 @@ const useUser = () => {
 
   const getUserById = async (user_id: number) => {
     const result = await fetchData<User>(
-      import.meta.env.VITE_AUTH_API + '/users/' + user_id
+      import.meta.env.VITE_AUTH_API + '/users/' + user_id,
     );
     return result;
   };
 
   return {getUserByToken, postUser, getUsernameAvailable, getEmailAvailable, getUserById};
 }
+
 
 const useAuthentication = () => {
   const postLogin = async (creds: Credentials) => {
@@ -248,12 +249,20 @@ const useComment = () => {
   const {getUserById} = useUser();
 
   const getCommentsByMediaId = async (media_id: number) => {
-    //Send a GET request to /comments/:media_id to get the comments.
-    return await fetchData<Comment[]>(
+    // Send a GET request to /comments/:media_id to get the comments.
+    const comments =  await fetchData<Comment[]>(
       import.meta.env.VITE_MEDIA_API + '/comments/bymedia/' + media_id,
     );
-    // get usernames for all comments
-    const commentsWithUsername = await Promise.all();
+    // get usernames for all comments from auth api
+    const commentsWithUsername = await Promise.all<
+      Comment & {username: string}
+    >(
+      comments.map(async (comment) => {
+        const user = await getUserById(comment.user_id);
+        return {...comment, username: user.username}
+      }),
+    );
+    return commentsWithUsername;
   };
 
   return { postComment, getCommentsByMediaId };
