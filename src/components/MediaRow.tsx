@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const MediaRow = (props: {
   item: MediaItemWithOwner,
 }) => {
+  // tuong duong voi props.item
   const {item} = props;
   const {user} = useUserContext();
   // console.log(user);
