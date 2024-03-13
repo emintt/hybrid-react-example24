@@ -69,8 +69,7 @@ const useMedia = () => {
 }
 
 const useUser = () => {
-  // implement network connections for auth/user server
-  // tee state user, hae user tietoa
+  // get user data from auth api
   const getUserByToken = async (token: string) => {
     const options = {
       headers: {
